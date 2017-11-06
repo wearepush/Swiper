@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 27, 2017
+ * Released on: November 6, 2017
  */
 
 (function (global, factory) {
@@ -7185,6 +7185,107 @@ var EffectCoverflow = {
   },
 };
 
+var Crazy3d = {
+  setTranslate: function setTranslate() {
+    var swiper = this;
+    var swiperWidth = swiper.width;
+    var swiperHeight = swiper.height;
+    var slides = swiper.slides;
+    var $wrapperEl = swiper.$wrapperEl;
+    var slidesSizesGrid = swiper.slidesSizesGrid;
+    var params = swiper.params.crazy3dEffect;
+    var isHorizontal = swiper.isHorizontal();
+    var transform = swiper.translate;
+    var center = isHorizontal ? -transform + (swiperWidth / 2) : -transform + (swiperHeight / 2);
+    var translate = params.depth;
+    // Each slide offset from center
+    for (var i = 0, length = slides.length; i < length; i += 1) {
+      var $slideEl = slides.eq(i);
+      var slideSize = slidesSizesGrid[i];
+      var slideOffset = $slideEl[0].swiperSlideOffset;
+      var offsetMultiplier = ((center - slideOffset - (slideSize / 2)) / slideSize) * params.modifier;
+
+      offsetMultiplier += Math.abs(offsetMultiplier) * params.asymmetry;
+
+      var mainOffset = params.stretch * offsetMultiplier;
+      var secondaryOffset = -offsetMultiplier * params.secondaryOffsetModifier;
+
+      var translateZ = -translate * Math.abs(offsetMultiplier);
+      var translateY = isHorizontal ? secondaryOffset : mainOffset;
+      var translateX = isHorizontal ? mainOffset : secondaryOffset;
+
+      var opacity = !offsetMultiplier ? 1 : 1 / Math.abs(offsetMultiplier * (1 / params.opacityModifier));
+      // Fix for ultra small values
+
+      if (Math.abs(translateX) < 0.001) { translateX = 0; }
+      if (Math.abs(translateY) < 0.001) { translateY = 0; }
+      if (Math.abs(translateZ) < 0.001) { translateZ = 0; }
+      if (Math.abs(opacity) < 0.001) { opacity = 0; }
+
+      var slideTransform = "translate3d(" + translateX + "px," + translateY + "px," + translateZ + "px)";
+
+      $slideEl.transform(slideTransform);
+      $slideEl.css({ opacity: opacity });
+      $slideEl[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
+    }
+
+    // Set correct perspective for IE10
+    if (Browser.ie) {
+      var ws = $wrapperEl[0].style;
+      ws.perspectiveOrigin = center + "px 50%";
+    }
+  },
+  setTransition: function setTransition(duration) {
+    var swiper = this;
+    swiper.slides
+      .transition(duration);
+  },
+};
+
+var EffectCrazy3d = {
+  name: 'effect-crazy-3d',
+  params: {
+    crazy3dEffect: {
+      stretch: 0,
+      depth: 100,
+      modifier: 6,
+      opacityModifier: 2,
+      secondaryOffsetModifier: 7,
+      asymmetry: 0,
+    },
+  },
+  create: function create() {
+    var swiper = this;
+    Utils.extend(swiper, {
+      crazy3dEffect: {
+        setTranslate: Crazy3d.setTranslate.bind(swiper),
+        setTransition: Crazy3d.setTransition.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit: function beforeInit() {
+      var swiper = this;
+      if (swiper.params.effect !== 'crazy3d') { return; }
+
+      swiper.classNames.push(((swiper.params.containerModifierClass) + "crazy-3d"));
+      swiper.classNames.push(((swiper.params.containerModifierClass) + "3d"));
+
+      swiper.params.watchSlidesProgress = true;
+    },
+    setTranslate: function setTranslate() {
+      var swiper = this;
+      if (swiper.params.effect !== 'crazy3d') { return; }
+      swiper.crazy3dEffect.setTranslate();
+    },
+    setTransition: function setTransition(duration) {
+      var swiper = this;
+      if (swiper.params.effect !== 'crazy3d') { return; }
+      swiper.crazy3dEffect.setTransition(duration);
+    },
+  },
+};
+
 // Swiper Class
 // Core Modules
 Swiper$1.components = [
@@ -7210,7 +7311,8 @@ Swiper$1.components = [
   EffectFade,
   EffectCube,
   EffectFlip,
-  EffectCoverflow
+  EffectCoverflow,
+  EffectCrazy3d
 ];
 
 return Swiper$1;

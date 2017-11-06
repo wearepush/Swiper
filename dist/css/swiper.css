@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 27, 2017
+ * Released on: November 6, 2017
  */
 .swiper-container {
   margin-left: auto;
@@ -596,6 +596,10 @@ button.swiper-pagination-bullet {
   backface-visibility: hidden;
 }
 .swiper-container-coverflow .swiper-wrapper {
+  /* Windows 8 IE 10 fix */
+  -ms-perspective: 1200px;
+}
+.swiper-container-crazy-3d .swiper-wrapper {
   /* Windows 8 IE 10 fix */
   -ms-perspective: 1200px;
 }
