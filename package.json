@@ -1,6 +1,6 @@
 {
-  "name": "swiper",
-  "version": "4.0.3",
+  "name": "swiper_weapush_fork",
+  "version": "4.0.4",
   "description": "Most modern mobile touch slider and framework with hardware accelerated transitions",
   "main": "dist/js/swiper.js",
   "jsnext:main": "dist/js/swiper.esm.bundle.js",
@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nolimits4web/Swiper.git"
+    "url": "https://github.com/wearepush/Swiper.git"
   },
   "keywords": [
     "swiper",
