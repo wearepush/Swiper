@@ -1,10 +1,10 @@
 var version = '4.0.2';
 
 Package.describe({
-  name: 'nolimits4web:swiper',
+  name: 'wearepush:swiper',
   summary: 'iDangero.us Swiper - mobile touch slider with hardware accelerated transitions and native behavior',
   version: version,
-  git: 'https://github.com/nolimits4web/Swiper'
+  git: 'https://github.com/wearepush/Swiper'
 });
 
 Package.onUse(function (api) {
