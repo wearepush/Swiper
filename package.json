@@ -1,6 +1,6 @@
 {
   "name": "swiper_weapush_fork",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "Most modern mobile touch slider and framework with hardware accelerated transitions",
   "main": "dist/js/swiper.js",
   "jsnext:main": "dist/js/swiper.esm.bundle.js",
