@@ -2,7 +2,7 @@
   "name": "swiper",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nolimits4web/Swiper.git"
+    "url": "https://github.com/wearepush/Swiper.git"
   },
   "description": "Most modern mobile touch slider and framework with hardware accelerated transitions",
   "version": "4.0.2",
